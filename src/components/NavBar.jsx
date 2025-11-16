@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/">Create Your Own Favorite Watchlist</Link>
+        <Link to="/">Movie WatchList</Link>
       </div>
 
       <div className="navbar-links">
