@@ -114,6 +114,22 @@
   margin: 0;
 }
 
+/* ⭐ FIX: SINGLE MOVIE SHOULD NOT STRETCH FULL WIDTH */
+/* Add this to your grid container (Home.css), but keeping it here for final completeness */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  align-items: flex-start;
+  padding: 1rem 0;
+}
+
+.movies-grid > :only-child {
+  max-width: 260px;
+  margin: 0 auto;
+}
+
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
   .movie-card {
@@ -134,3 +150,4 @@
     font-size: 1.2rem;
   }
 }
+
