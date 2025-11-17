@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/* === SEARCH BAR === */
 .search-form {
   max-width: 600px;
   margin: 0 auto 2rem;
@@ -42,7 +43,7 @@
   background-color: #f40612;
 }
 
-
+/* === RESPONSIVE SEARCH BAR === */
 @media (max-width: 639px) {
   .home {
     padding: 1rem 0;
@@ -53,11 +54,20 @@
   }
 }
 
+/* === FINAL MOVIE GRID (Correct for Vercel + Card Layout) === */
 .movies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
+  justify-items: center;
+  align-items: flex-start;
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* When only *one* movie is shown — keep centered & correct size */
+.movies-grid > :only-child {
+  max-width: 260px;
+  margin: 0 auto;
 }
