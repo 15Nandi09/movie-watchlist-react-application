@@ -9,7 +9,7 @@ function Home() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load default movies (because OMDb has no popular endpoint)
+  // Load default movies (OMDb has no popular endpoint)
   useEffect(() => {
     const loadDefaultMovies = async () => {
       try {
@@ -45,6 +45,12 @@ function Home() {
     }
   };
 
+  // 💡 Remove duplicate movies by imdbID
+  const uniqueMovies = movies.filter(
+    (movie, index, self) =>
+      index === self.findIndex((m) => m.imdbID === movie.imdbID)
+  );
+
   return (
     <div className="home">
       <form onSubmit={handleSearch} className="search-form">
@@ -66,7 +72,7 @@ function Home() {
         <div className="loading">Loading...</div>
       ) : (
         <div className="movies-grid">
-          {movies.map((movie) => (
+          {uniqueMovies.map((movie) => (
             <MovieCard movie={movie} key={movie.imdbID} />
           ))}
         </div>

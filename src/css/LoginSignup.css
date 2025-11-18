@@ -1,0 +1,125 @@
+/* ===== PAGE BACKGROUND (no color, no gradient, no effect) ===== */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: transparent; /* no background */
+}
+
+/* ===== CARD (pure black) ===== */
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: #000; /* pure black */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  border: 1px solid #222; /* subtle border */
+}
+
+/* ===== TITLE ===== */
+.auth-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+/* ===== INPUT FIELDS ===== */
+.auth-input {
+  width: 100%;
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #111;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.auth-input::placeholder {
+  color: #777;
+}
+
+.auth-input:focus {
+  border-color: #e50914; /* red border */
+}
+
+/* ===== REMEMBER ME ===== */
+.remember-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 1.2rem;
+}
+
+.remember-row input {
+  margin-right: 0.5rem;
+}
+
+/* ===== RED BUTTON ===== */
+.auth-btn {
+  width: 100%;
+  padding: 0.85rem 0;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #e50914; /* bright red */
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.auth-btn:hover {
+  background-color: #f7131b; /* lighter red */
+}
+
+/* ===== OR DIVIDER ===== */
+.auth-divider {
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* ===== SOCIAL BUTTONS (Optional) ===== */
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-btn {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid #333;
+  background-color: #111;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.social-btn:hover {
+  background-color: #222;
+}
+
+/* ===== BOTTOM LINK ===== */
+.auth-bottom {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.auth-bottom a {
+  color: #e50914;
+  font-weight: 600;
+}
