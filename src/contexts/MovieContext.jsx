@@ -1,50 +1,72 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../services/firebase";
+import {
+  collection,
+  doc,
+  setDoc,
+  deleteDoc,
+  onSnapshot,
+} from "firebase/firestore";
 
 const MovieContext = createContext();
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const useMovieContext = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
+  const [user, setUser] = useState(null);
 
-  // Load favorites from storage on first render
+  // Track Firebase auth state
   useEffect(() => {
-    const storedFavs = localStorage.getItem("favorites");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (storedFavs) setFavorites(JSON.parse(storedFavs));
+    const unsub = auth.onAuthStateChanged((u) => {
+      setUser(u);
+    });
+    return () => unsub();
   }, []);
 
-  // Save favorites to storage whenever it changes
+  // Load favorites when user logs in
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
+    if (!user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFavorites([]);
+      return;
+    }
 
-  const addToFavorites = (movie) => {
-    // prevent duplicates
-    setFavorites((prev) => {
-      if (prev.some((fav) => fav.imdbID === movie.imdbID)) return prev;
-      return [...prev, movie];
+    const favsRef = collection(db, "users", user.uid, "favorites");
+
+    // Real-time listener
+    const unsubscribe = onSnapshot(favsRef, (snapshot) => {
+      const favList = snapshot.docs.map((doc) => doc.data());
+      setFavorites(favList);
     });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  // Add movie to favorites
+  const addToFavorites = async (movie) => {
+    if (!user) return alert("Please login to save favorites");
+
+    const ref = doc(db, "users", user.uid, "favorites", movie.imdbID);
+    await setDoc(ref, movie);
   };
 
-  const removeFromFavorites = (imdbID) => {
-    setFavorites((prev) => prev.filter((movie) => movie.imdbID !== imdbID));
+  // Remove movie from favorites
+  const removeFromFavorites = async (imdbID) => {
+    if (!user) return;
+
+    const ref = doc(db, "users", user.uid, "favorites", imdbID);
+    await deleteDoc(ref);
   };
 
   const isFavorite = (imdbID) => {
     return favorites.some((movie) => movie.imdbID === imdbID);
   };
 
-  const value = {
-    favorites,
-    addToFavorites,
-    removeFromFavorites,
-    isFavorite,
-  };
-
   return (
-    <MovieContext.Provider value={value}>
+    <MovieContext.Provider
+      value={{ favorites, addToFavorites, removeFromFavorites, isFavorite, user }}
+    >
       {children}
     </MovieContext.Provider>
   );

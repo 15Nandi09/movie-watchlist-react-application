@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../css/Navbar.css";
 import { auth } from "../services/firebase";
 import { useMovieContext } from "../contexts/MovieContext";
@@ -12,25 +12,28 @@ function NavBar() {
 
   return (
     <nav className="navbar">
+      {/* Brand / Logo */}
       <div className="navbar-brand">
         <Link to="/">Movie WatchList</Link>
       </div>
 
+      {/* Navigation + Auth Buttons */}
       <div className="navbar-links">
-        <Link to="/" className="nav-link">Home</Link>
-        <Link to="/favorites" className="nav-link">Favorites</Link>
 
-        {/* Show Login / Signup if NOT logged in */}
+        <NavLink to="/" className="nav-link">Home</NavLink>
+        <NavLink to="/favorites" className="nav-link">Favorites</NavLink>
+
+        {/* If NOT logged in → show Login + Signup */}
         {!user && (
           <>
-            <Link to="/signup" className="nav-link auth-btn">Signup</Link>
-            <Link to="/login" className="nav-link auth-btn">Login</Link>
+            <NavLink to="/signup" className="auth-btn">Signup</NavLink>
+            <NavLink to="/login" className="auth-btn">Login</NavLink>
           </>
         )}
 
-        {/* Show Logout if logged in */}
+        {/* If logged in → show Logout */}
         {user && (
-          <button onClick={handleLogout} className="nav-link logout-btn">
+          <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
         )}

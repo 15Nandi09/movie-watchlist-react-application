@@ -114,6 +114,8 @@
   margin: 0;
 }
 
+
+
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
   .movie-card {

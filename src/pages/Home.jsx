@@ -1,6 +1,6 @@
 import MovieCard from "../components/MovieCard";
 import { useState, useEffect } from "react";
-import { searchMovies } from "../services/api";
+import { searchMovies, loadHomeMovies } from "../services/api";
 import "../css/Home.css";
 
 function Home() {
@@ -9,12 +9,12 @@ function Home() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load default movies (OMDb has no popular endpoint)
+  // Load multiple-genre movies on homepage
   useEffect(() => {
-    const loadDefaultMovies = async () => {
+    const loadMovies = async () => {
       try {
-        const defaultMovies = await searchMovies("Batman");
-        setMovies(defaultMovies);
+        const mixedMovies = await loadHomeMovies();
+        setMovies(mixedMovies);
       } catch (err) {
         console.log(err);
         setError("Failed to load movies...");
@@ -23,7 +23,7 @@ function Home() {
       }
     };
 
-    loadDefaultMovies();
+    loadMovies();
   }, []);
 
   const handleSearch = async (e) => {
@@ -44,12 +44,6 @@ function Home() {
       setLoading(false);
     }
   };
-
-  // 💡 Remove duplicate movies by imdbID
-  const uniqueMovies = movies.filter(
-    (movie, index, self) =>
-      index === self.findIndex((m) => m.imdbID === movie.imdbID)
-  );
 
   return (
     <div className="home">
@@ -72,7 +66,7 @@ function Home() {
         <div className="loading">Loading...</div>
       ) : (
         <div className="movies-grid">
-          {uniqueMovies.map((movie) => (
+          {movies.map((movie) => (
             <MovieCard movie={movie} key={movie.imdbID} />
           ))}
         </div>
