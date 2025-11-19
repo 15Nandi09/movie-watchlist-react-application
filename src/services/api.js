@@ -1,4 +1,4 @@
-const API_KEY = "419d9b34";
+const API_KEY = "59bc45e5";
 const BASE_URL = "https://www.omdbapi.com/";
 
 /* ================================
@@ -18,13 +18,10 @@ export const searchMovies = async (query, page = 1) => {
 export const loadHomeMovies = async () => {
   const keywords = [
     "Harry Potter",
-    "Dilwale Dulhania Le Jayenge",
-    "Yeh Jawaani Hai Deewani",
-    "Batman",
     "Friends",
+    "Batman",
     "Iron Man",
-    "Spider Man",
-    "Suits", 
+    "Spider Man", 
   ];
 
   let allMovies = [];
